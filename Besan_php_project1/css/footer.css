@@ -1,0 +1,23 @@
+.footer {
+    background-color: #f8f9fa;
+    padding: 7px;
+    text-align: center;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+     color:#565151;
+  }
+
+  .footer-social-icons {
+    margin-top: 7px;
+  }
+
+  .footer-social-icons a {
+    display: inline-block;
+    margin: 0 5px;
+    color: #565151;
+    font-size: 20px;
+  }
