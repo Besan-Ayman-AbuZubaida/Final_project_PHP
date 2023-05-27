@@ -1,0 +1,22 @@
+/** profile page*/
+.profile_button {
+    display: inline-block;
+    padding: 10px 20px;
+    /* background: rgba(76,68,182,0.808); */
+    background-color: #4caf50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    /* margin-top: 10px; */
+}
+
+.profile_body {
+    background-color: #e4e9f7;
+
+}
+
+.profile_main {
+    padding: 20px;
+}

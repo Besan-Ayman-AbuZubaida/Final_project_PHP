@@ -1,38 +1,36 @@
 <?php
 require 'oop_myfunctions.php';
 //if the user is not logged in redirect to sign in page
-
 if (!isset($_SESSION["login"])) {
     header("location: sign_in.php");
-} else { // user has a session
+} else {
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $select = new Select();
-        $res = $select->selectUserById($id);
-        if ($res && $res->num_rows > 0) {
-            $row = $res->fetch_assoc();
-            $username = $row['username'];
-            $old_email = $row['email'];
-        } else { //if 0 rows returns from db redirect to the previous page
-            header("location: show_users.php");
-        }
-    } else { // if id is not set redirect to the previous page
+    } else { // $_GET['id'] is not set
         header("location: show_users.php");
     }
 
 
     if (isset($_POST['submit'])) {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
+
+        $new_password = $_POST['new_password'];
+        $confirm_password = $_POST['confirm_password'];
 
 
-        $updateForUser = new UpdateForUser();
-        $res = $updateForUser->updateForUser($id, $username, $email, $old_email);
-        if ($res == 10) {
-            // can't update email to the email of another user email must be unique
+        $adminUpdatePassword = new AdminUpdatePassword();
+        $result = $adminUpdatePassword->update_password($id, $new_password, $confirm_password);
+        //password less than 8 characters
+        if ($result == 10) {
             echo "<div class='message'>
-            <p>email is already used, plesae choose another one</p>
-            </div> <br>";
+        <p>Password can't be less than 8 characters!</p>
+        </div> <br>";
+        }
+        //passwords don't match return 100
+        else {
+
+            echo "<div class='message'>
+        <p>Passwords don't match!</p>
+        </div> <br>";
         }
     }
 }
@@ -48,7 +46,7 @@ if (!isset($_SESSION["login"])) {
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/update.css">
     <link rel="stylesheet" href="css/footer.css">
-    <title>update</title>
+    <title>update password</title>
 </head>
 
 <body>
@@ -59,16 +57,17 @@ if (!isset($_SESSION["login"])) {
     <div class="update-container">
         <div class="box form-box update-form-box">
 
-            <header>Update user</header>
+            <header>Update password</header>
             <form action="" method="post">
+
                 <div class="field input">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username); ?>" autocomplete="off" required>
+                    <label for="new_password">new password</label>
+                    <input type="password" name="new_password" id="username" autocomplete="off" required>
                 </div>
 
                 <div class="field input">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($old_email); ?>" autocomplete="off" required>
+                    <label for="confirm_password">confirm password</label>
+                    <input type="password" name="confirm_password" id="email" autocomplete="off" required>
                 </div>
 
                 <div class="field">
