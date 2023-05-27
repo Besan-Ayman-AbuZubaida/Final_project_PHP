@@ -38,12 +38,12 @@ if (isset($_POST["submit"])) {
             // registration successfull
             $_SESSION["login"] = true;
             $_SESSION["id"] = $register->idUser();
+            $_SESSION["role"] = 2;
+            header("Location: show_users.php");
 
-            header("location:sign_in.php");
-            //when the user navigate back using back button on the browser
+            ////when the user navigate back using back button on the browser
             header('Cache-Control: no cache');
             session_cache_limiter('private_no_expire');
-
 
             // already has an acount please sign in 
         } elseif ($result == 10) {
